@@ -2,10 +2,10 @@
 
 A drag-and-drop tracker for job and internship applications. Move cards through four stages, watch the pipeline bar rebalance, and pick your search back up the next day: everything is saved in your browser.
 
-**Live demo:** _add your GitHub Pages link here after the first deploy_
+**Live demo:** https://anshraj18.github.io/ledger-application-tracker/
 
 ![Ledger screenshot](C:\Users\anshr\OneDrive\Desktop\ledger-application-tracker\ledger-application-tracker\docs)
-<!-- Take a screenshot of the running app and save it as docs/screenshot.png -->
+
 
 ## Features
 
