@@ -1,0 +1,117 @@
+:root {
+  --bg: #e8ecf1;
+  --surface: #f9fbfc;
+  --ink: #0f2233;
+  --mute: #5d6f80;
+  --line: #cfd8e1;
+  --focus: #2a5bd7;
+  --wish: #7d8ea0;
+  --applied: #3d6fe0;
+  --interview: #d9961a;
+  --offer: #1f9d6b;
+  --display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --note: 'Newsreader', Georgia, serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0e1620; --surface: #17222f; --ink: #e6edf4; --mute: #8fa1b3; --line: #2a3a4b; --focus: #7ea2ff;
+    --wish: #8a9bad; --applied: #6f98ff; --interview: #f0b94a; --offer: #46c08f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0e1620; --surface: #17222f; --ink: #e6edf4; --mute: #8fa1b3; --line: #2a3a4b; --focus: #7ea2ff;
+  --wish: #8a9bad; --applied: #6f98ff; --interview: #f0b94a; --offer: #46c08f;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--display);
+  line-height: 1.45;
+}
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.s-wish { --c: var(--wish); }
+.s-applied { --c: var(--applied); }
+.s-interview { --c: var(--interview); }
+.s-offer { --c: var(--offer); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); flex: none; }
+
+.app {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: max(clamp(20px, 4vw, 48px), env(safe-area-inset-top)) clamp(20px, 4vw, 48px) max(32px, env(safe-area-inset-bottom));
+}
+
+/* header */
+.header { display: flex; flex-wrap: wrap; gap: 16px 24px; justify-content: space-between; align-items: center; }
+h1 { margin: 0; font-size: clamp(2rem, 5.5vw, 3.4rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.search {
+  width: 230px; padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+}
+.btn {
+  padding: 9px 18px; border: 1px solid var(--ink); border-radius: 999px; background: transparent; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn.primary:hover { background: color-mix(in srgb, var(--ink) 85%, var(--applied)); }
+
+/* pipeline: the one loud element */
+.pipeline { margin: 28px 0 32px; }
+.summary { margin: 0 0 12px; font-family: var(--note); font-style: italic; font-size: 1.2rem; color: var(--mute); }
+.rail { display: flex; gap: 4px; height: 18px; animation: reveal 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.seg { background: var(--c); border-radius: 999px; min-width: 18px; transition: flex-grow 0.4s ease; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 22px; list-style: none; margin: 12px 0 0; padding: 0; font-size: 0.9rem; color: var(--mute); }
+.legend li { display: flex; align-items: center; gap: 7px; }
+.legend b { color: var(--ink); font-weight: 600; }
+@keyframes reveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* board */
+.board { display: grid; grid-template-columns: repeat(4, minmax(230px, 1fr)); gap: 16px; align-items: start; overflow-x: auto; padding-bottom: 12px; }
+.col { background: color-mix(in srgb, var(--surface) 55%, transparent); border: 1px solid var(--line); border-radius: 22px; padding: 14px 12px 12px; }
+.col h2 { display: flex; align-items: center; gap: 9px; margin: 0 6px 12px; font-size: 1rem; font-weight: 600; }
+.count { margin-left: auto; color: var(--mute); font-weight: 400; }
+.drop { display: flex; flex-direction: column; gap: 10px; min-height: 120px; padding: 4px; border-radius: 14px; transition: background 0.15s; }
+.drop.over { background: color-mix(in srgb, var(--c) 16%, transparent); }
+.empty { margin: 8px; color: var(--mute); font-size: 0.9rem; }
+
+/* card */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px 8px; cursor: grab; transition: border-color 0.15s, box-shadow 0.15s; }
+.card:hover { border-color: var(--c); }
+.card.dragging { opacity: 0.45; }
+.card h3 { margin: 0; font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+.role { margin: 1px 0 0; color: var(--mute); font-size: 0.9rem; }
+.note { margin: 9px 0 0; font-family: var(--note); font-style: italic; font-size: 1rem; line-height: 1.35; }
+.card footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 30px; }
+.when { color: var(--mute); font-size: 0.78rem; }
+.actions { display: flex; gap: 2px; opacity: 0; transition: opacity 0.15s; }
+.card:hover .actions, .card:focus-within .actions { opacity: 1; }
+@media (hover: none) { .actions { opacity: 1; } }
+.actions button { display: grid; place-items: center; width: 28px; height: 28px; border: 0; border-radius: 8px; background: none; color: var(--mute); cursor: pointer; }
+.actions button:hover:not(:disabled) { background: var(--bg); color: var(--ink); }
+.actions button:disabled { opacity: 0.3; cursor: default; }
+
+/* dialog */
+dialog { width: min(92vw, 420px); padding: 28px; border: 0; border-radius: 22px; background: var(--surface); color: var(--ink); box-shadow: 0 30px 70px -24px rgba(8, 20, 33, 0.55); }
+dialog::backdrop { background: rgba(8, 20, 33, 0.45); }
+dialog h2 { margin: 0 0 8px; font-size: 1.5rem; letter-spacing: -0.02em; }
+label { display: block; margin-top: 14px; font-size: 0.85rem; font-weight: 600; }
+dialog input, dialog textarea { display: block; width: 100%; margin-top: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-weight: 400; font-size: 1rem; resize: none; }
+.row { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+
+@media (max-width: 720px) {
+  .board { grid-template-columns: repeat(4, 84vw); scroll-snap-type: x proximity; }
+  .col { scroll-snap-align: start; }
+  .search { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
